@@ -74,6 +74,11 @@
       "url": "https://github.com/AlafandyPorting/extension-webm"
     },
     {
+      "name": "linc_luajit",
+      "type": "haxelib",
+      "version": null
+    },
+    {
       "name": "actuate",
       "type": "haxelib",
       "version": null
