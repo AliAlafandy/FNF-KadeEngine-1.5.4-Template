@@ -7,6 +7,7 @@ jobs:
   Build:
     name: ${{ matrix.name }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: Windows x64
