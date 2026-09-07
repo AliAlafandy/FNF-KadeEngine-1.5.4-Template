@@ -178,6 +178,10 @@
 	<icon path="art/icon512.png" size='512'/>
 	<icon path="art/iconOG.png" />
 
+	<!-- For all Windows platforms -->
+	<app path="export\32bit\windows\bin" if="32bits" />
+	
+	<!-- Do whatever you want I'm tired uninstall and install everytime -->
 	<certificate path="key.keystore" password="@ellawy09" alias="alafandy" alias-password="@ellawy09" if="android" unless="debug" />
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
