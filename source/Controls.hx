@@ -11,6 +11,7 @@ import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
+
 #if mobileC
 import mobile.Hitbox;
 import mobile.FlxVirtualPad;
@@ -271,6 +272,7 @@ class Controls extends FlxActionSet
 		setKeyboardScheme(scheme, false);
 	}
 	#end
+
 	#if mobileC
 	public var trackedinputs:Array<FlxActionInput> = [];
 
@@ -290,27 +292,29 @@ class Controls extends FlxActionSet
 		inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, hitbox.buttonRight, state));	
 	}
 
+	public function removeFlxInput(Tinputs:Array<FlxActionInput>) {
+    	for (action in this.digitalActions)
+    	{
+        	var i:Int = action.inputs.length;
 
-	public function removeFlxInput(Tinputs) {
-		for (action in this.digitalActions)
-		{
-			var i = action.inputs.length;
-
-			while (i-- > 0)
-			{
-				var input = action.inputs[i];
+        	while (i-- > 0)
+        	{
+            	var input:FlxActionInput = action.inputs[i];
 				/*if (input.device == IFLXINPUT_OBJECT)
 					action.remove(input);*/
 
-				var x = Tinputs.length;
-				while (x-- > 0)
-					if (Tinputs[x] == input)
-						action.remove(input);
-			}
-		}
+            	var x:Int = Tinputs.length;
+            	while (x-- > 0)
+            	{
+                	if (Tinputs[x] == input)
+                	{
+                    	action.remove(input);
+                    	break;
+                	}
+            	}
+        	}
+    	}
 	}
-
-
 
 	/*#if android
 	public function addAndroidBack() {
@@ -322,7 +326,6 @@ class Controls extends FlxActionSet
 		_back.addKey(BACK, PRESSED);
 	}
 	#end*/
-
 
 	public function setVirtualPad(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) {
 		if (DPad == null)
@@ -367,6 +370,7 @@ class Controls extends FlxActionSet
 		}
 	}
 	#end
+	
 	override function update()
 		super.update();
 
