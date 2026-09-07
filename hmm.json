@@ -16,13 +16,6 @@
       "version": "4.9.0"
     },
     {
-      "name": "hxcpp",
-      "type": "git",
-      "dir": null,
-      "ref": "main",
-      "url": "https://github.com/AlafandyPorting/hxcpp-0.7.3"
-    },
-    {
       "name": "flixel-tools",
       "type": "haxelib",
       "version": "1.5.1"
