@@ -33,14 +33,19 @@
       "version": "2.4.0"
     },
     {
-      "name": "flixel-addons",
-      "type": "haxelib",
-      "version": "2.10.0"
-    },
-    {
       "name": "hscript",
       "type": "haxelib",
       "version": null
+    },
+    {
+      "name": "newgrounds",
+      "type": "haxelib",
+      "version": null
+    },
+    {
+      "name": "flixel-addons",
+      "type": "haxelib",
+      "version": "2.10.0"
     },
     {
       "name": "faxe",
