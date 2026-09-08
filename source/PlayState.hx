@@ -7,9 +7,9 @@ import openfl.ui.Keyboard;
 import openfl.events.KeyboardEvent;
 import Replay.Ana;
 import Replay.Analysis;
-/*#if cpp
+#if cpp
 import webm.WebmPlayer;
-#end*/
+#end
 import flixel.input.keyboard.FlxKey;
 import haxe.Exception;
 import openfl.geom.Matrix;
@@ -265,7 +265,7 @@ class PlayState extends MusicBeatState
 		PlayStateChangeables.safeFrames = FlxG.save.data.frames;
 		PlayStateChangeables.scrollSpeed = FlxG.save.data.scrollSpeed;
 		PlayStateChangeables.botPlay = FlxG.save.data.botplay;
-		//PlayStateChangeables.Optimize = FlxG.save.data.optimize;
+		PlayStateChangeables.Optimize = FlxG.save.data.optimize;
 
 		// pre lowercasing the song name (create)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
@@ -1910,7 +1910,7 @@ class PlayState extends MusicBeatState
 			camHUD.visible = !camHUD.visible;
 
 
-		/*if (useVideo && GlobalVideo.get() != null && !stopUpdate)
+		if (useVideo && GlobalVideo.get() != null && !stopUpdate)
 			{		
 				if (GlobalVideo.get().ended && !removedVideo)
 				{
@@ -1919,7 +1919,7 @@ class PlayState extends MusicBeatState
 					FlxG.stage.window.onFocusIn.remove(focusIn);
 					removedVideo = true;
 				}
-			}*/
+			}
 
 
 		
@@ -2049,14 +2049,14 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			/*if (useVideo)
+			if (useVideo)
 				{
 					GlobalVideo.get().stop();
 					remove(videoSprite);
 					FlxG.stage.window.onFocusOut.remove(focusOut);
 					FlxG.stage.window.onFocusIn.remove(focusIn);
 					removedVideo = true;
-				}*/
+				}
 			#if windows
 			DiscordClient.changePresence("Chart Editor", null, null, true);
 			#end
@@ -2097,20 +2097,20 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
 
-		/* if (FlxG.keys.justPressed.NINE)
+		if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
 		#if debug
 		if (FlxG.keys.justPressed.SIX)
 		{
-			/*if (useVideo)
+			if (useVideo)
 				{
 					GlobalVideo.get().stop();
 					remove(videoSprite);
 					FlxG.stage.window.onFocusOut.remove(focusOut);
 					FlxG.stage.window.onFocusIn.remove(focusIn);
 					removedVideo = true;
-				}*/
+				}
 
 			FlxG.switchState(new AnimationDebug(SONG.player2));
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
@@ -2678,13 +2678,13 @@ class PlayState extends MusicBeatState
 	function endSong():Void
 	{
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
-		/*if (useVideo)
+		if (useVideo)
 			{
 				GlobalVideo.get().stop();
 				FlxG.stage.window.onFocusOut.remove(focusOut);
 				FlxG.stage.window.onFocusIn.remove(focusIn);
 				PlayState.instance.remove(PlayState.instance.videoSprite);
-			}*/
+			}
 
 		if (isStoryMode)
 			campaignMisses = misses;
@@ -3398,7 +3398,7 @@ class PlayState extends MusicBeatState
 			}
 
 
-			/*public function backgroundVideo(source:String) // for background videos
+			public function backgroundVideo(source:String) // for background videos
 				{
 					#if cpp
 					useVideo = true;
@@ -3450,7 +3450,7 @@ class PlayState extends MusicBeatState
 					else
 						webmHandler.resume();
 					#end
-				}*/
+				}
 
 	function noteMiss(direction:Int = 1, daNote:Note):Void
 	{
