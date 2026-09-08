@@ -111,7 +111,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 				actions.add(add(buttonX = createButton(FlxG.width - 44, FlxG.height - 88, 44, 45, "x")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86, FlxG.height - 48, 44, 45, "b")));
 				actions.add(add(buttonA = createButton(FlxG.width - 44, FlxG.height - 48, 44, 45, "a")));
-			case PAUSE:
+			case STOP:
 				actions.add(add(buttonPause = createButton(FlxG.width - 44 * 3, FlxG.height - 48 - 519 * 3, 44 * 3, 45 * 3, "pause")));
 			case NONE: // do nothing
 		}
@@ -207,6 +207,6 @@ enum FlxActionMode
 	A_B;
 	A_B_C;
 	A_B_X_Y;
-	PAUSE;
+	STOP;
 }
 #end
