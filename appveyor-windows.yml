@@ -17,7 +17,7 @@ install:
   - mkdir "%HAXELIB_ROOT%"
   - haxelib setup "%HAXELIB_ROOT%"
   # Install project dependencies
-  - haxelib install lime 7.9.0
+  - haxelib git lime https://github.com/AlafandyPorting/lime-0.7.3
   - RefreshEnv
   - haxelib install openfl 9.1.0
   - haxelib install flixel 4.9.0
