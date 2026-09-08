@@ -126,7 +126,7 @@ class FastValue extends Option
 	}
 
 	private override function updateDisplay():String
-		return (FlxG.save.data.fastValue == 0 ?; "Slow" : (FlxG.save.data.fastValue == 1 ? "Faster" : "Fastest")) + " Value";
+		return (FlxG.save.data.fastValue == 0 ? "Slow" : (FlxG.save.data.fastValue == 1 ? "Faster" : "Fastest")) + " Value";
 }
 #end
 
