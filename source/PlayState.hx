@@ -1084,7 +1084,7 @@ class PlayState extends MusicBeatState
 
 			add(mcontrols);
 
-			addVirtualPad(NONE, PAUSE);
+			addVirtualPad(NONE, STOP);
 		#end
 
 		// if (SONG.song == 'South')
