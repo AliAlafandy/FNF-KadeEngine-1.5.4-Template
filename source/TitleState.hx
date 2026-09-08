@@ -174,17 +174,22 @@ class TitleState extends MusicBeatState
 		{
 			logoBl = new FlxSprite(-150, 1500);
 			logoBl.frames = Paths.getSparrowAtlas('KadeEngineLogoBumpin');
+			logoBl.antialiasing = FlxG.save.data.antialiasing;
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+			logoBl.updateHitbox();
+			// logoBl.screenCenter();
+			// logoBl.color = FlxColor.BLACK;
 		}
 		else
 		{
 			logoBl = new FlxSprite(-150, -100);
 			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+			logoBl.antialiasing = FlxG.save.data.antialiasing;
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
+			logoBl.updateHitbox();
+			// logoBl.screenCenter();
+			// logoBl.color = FlxColor.BLACK;
 		}
-		logoBl.antialiasing = FlxG.save.data.antialiasing;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
 
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
