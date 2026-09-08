@@ -24,70 +24,157 @@ env:
   PROJECT_NAME: KadeEngine
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
+  ANDROID_NDK_VERSION: 21.4.7075529
+  ANDROID_PLATFORM: android-29
+
 jobs:
   build:
     name: Build
     runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
 
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: ${{ env.HAXE_VERSION }}
 
+      - name: Setup Java 11
+        if: inputs.name == 'Android x64' || inputs.name == 'Android x32'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+
+      - name: Setup Android SDK
+        if: inputs.name == 'Android x64' || inputs.name == 'Android x32'
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK and NDK
+        if: inputs.name == 'Android x64' || inputs.name == 'Android x32'
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+
+          sdkmanager \
+            "platform-tools" \
+            "platforms;android-29" \
+            "build-tools;29.0.3" \
+            "ndk;${ANDROID_NDK_VERSION}"
+
+      - name: Configure Android Environment
+        if: inputs.name == 'Android x64' || inputs.name == 'Android x32'
+        shell: bash
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/${ANDROID_NDK_VERSION}"
+          echo "JAVA_HOME=$JAVA_HOME"
+
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/${ANDROID_NDK_VERSION}" >> "$GITHUB_ENV"
+
+          haxelib run lime config ANDROID_SDK "$ANDROID_HOME"
+          haxelib run lime config ANDROID_NDK_ROOT "$ANDROID_HOME/ndk/${ANDROID_NDK_VERSION}"
+          haxelib run lime config JAVA_HOME "$JAVA_HOME"
+          haxelib run lime config ANDROID_SETUP true
+
       - name: Update APT
         if: inputs.name == 'Linux'
         run: |
-          sudo apt-get clean
-          sudo rm -rf /var/lib/apt/lists/*
-          sudo apt-get update --fix-missing
+          sudo apt-get update
 
-      - name: Install libVLC
+      - name: Install Linux Dependencies
         if: inputs.name == 'Linux'
-        run: sudo apt-get install -y libvlc-dev libvlccore-dev
+        run: |
+          sudo apt-get install -y \
+            libvlc-dev \
+            libvlccore-dev
 
-      - name: Setup XCode
+      - name: Select XCode
         if: inputs.name == 'iOS'
-        uses: maxim-lobanov/setup-xcode@master
-        with:
-          xcode-version: '16.4'
+        shell: bash
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.4.app
+
+          xcode-select -p
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: Initialize XCode
+        if: inputs.name == 'iOS'
+        shell: bash
+        run: |
+          sudo xcodebuild -license accept
+          sudo xcodebuild -runFirstLaunch
 
       - name: Install Libraries
+        shell: bash
         run: |
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
 
-      - name: Configure Android x64
-        if: inputs.name == 'Android x64'
+      - name: Print ToolChain
+        shell: bash
         run: |
-          haxelib run lime config ANDROID_SDK $ANDROID_HOME
-          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
-          haxelib run lime config JAVA_HOME $JAVA_HOME_17_arm64
-          haxelib run lime config ANDROID_SETUP true
+          haxe --version
+          haxelib list
+          haxelib run lime version
 
-      - name: Configure Android x32
-        if: inputs.name == 'Android x32'
+      - name: Clean Previous Build
+        shell: bash
         run: |
-          haxelib run lime config ANDROID_SDK $ANDROID_HOME
-          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
-          haxelib run lime config JAVA_HOME $JAVA_HOME_17_arm64
-          haxelib run lime config ANDROID_SETUP true
+          rm -rf export/release
+          rm -rf export/debug
+          rm -rf export/32bit
 
       - name: Compile
-        run: haxelib run lime build ${{ inputs.buildArgs }}
+        shell: bash
+        run: |
+          haxelib run lime build ${{ inputs.buildArgs }}
 
       - name: Make IPA
         if: inputs.name == 'iOS'
+        shell: bash
         run: |
-          cd export/release/ios/build/Release-iphoneos
+          set -e
+
+          IOS_DIR="export/release/ios/build/Release-iphoneos"
+
+          if [ ! -d "$IOS_DIR" ]; then
+            echo "ERROR: iOS output directory does not exist:"
+            echo "$IOS_DIR"
+            find export/release/ios -maxdepth 5 -type f 2>/dev/null || true
+            exit 1
+          fi
+
+          cd "$IOS_DIR"
+
+          APP_COUNT=$(find . -maxdepth 1 -type d -name "*.app" | wc -l | tr -d ' ')
+
+          if [ "$APP_COUNT" -eq 0 ]; then
+            echo "ERROR: No .app bundle was produced."
+            ls -la
+            exit 1
+          fi
+
+          rm -rf Payload
           mkdir Payload
-          mv *.app Payload
-          zip -r ${{ env.PROJECT_NAME }}.ipa Payload
+
+          find . -maxdepth 1 -type d -name "*.app" -exec mv {} Payload/ \;
+
+          cd ..
+
+          rm -f "${PROJECT_NAME}.ipa"
+
+          cd Release-iphoneos
+
+          zip -r "${PROJECT_NAME}.ipa" Payload
+
+          echo "Created:"
+          ls -lh "${PROJECT_NAME}.ipa"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.artifactName }}
           path: ${{ inputs.artifactPath }}
