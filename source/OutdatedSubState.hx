@@ -86,7 +86,7 @@ class OutdatedSubState extends MusicBeatState
 	{
 		if (controls.ACCEPT)
 		{
-			fancyOpenURL("https://kadedev.github.io/Kade-Engine/changelogs/changelog-" + needVer);
+			fancyOpenURL("https://alialafandy.github.io/FNF-KadeEngine-1.5.4-Template/changelogs/changelog-" + needVer);
 		}
 		if (controls.BACK)
 		{
