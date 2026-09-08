@@ -80,9 +80,6 @@ class KadeEngineData
 		if (FlxG.save.data.downscroll == null)
 			FlxG.save.data.downscroll = false;
 
-		if (FlxG.save.data.middlescroll == null)
-			FlxG.save.data.middlescroll = false;
-
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
 
@@ -90,7 +87,7 @@ class KadeEngineData
 		if (FlxG.save.data.fastValue == null)
 			FlxG.save.data.fastValue = 0;
 		#end
-
+			
 		if (FlxG.save.data.accuracyDisplay == null)
 			FlxG.save.data.accuracyDisplay = true;
 
@@ -100,10 +97,8 @@ class KadeEngineData
 		if (FlxG.save.data.songPosition == null)
 			FlxG.save.data.songPosition = false;
 
-		#if desktop
-		if (FlxG.save.data.inputShow == null)
-			FlxG.save.data.inputShow = false;
-		#end
+		if (FlxG.save.data.fps == null)
+			FlxG.save.data.fps = false;
 
 		if (FlxG.save.data.changedHit == null)
 		{
@@ -111,6 +106,9 @@ class KadeEngineData
 			FlxG.save.data.changedHitY = -1;
 			FlxG.save.data.changedHit = false;
 		}
+
+		if (FlxG.save.data.fpsRain == null)
+			FlxG.save.data.fpsRain = false;
 
 		#if mobileC
 		if (FlxG.save.data.fpsCap == null)
@@ -126,13 +124,7 @@ class KadeEngineData
 		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
 			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
 		#end
-
-		if (FlxG.save.data.fps == null)
-			FlxG.save.data.fps = false;
-
-		if (FlxG.save.data.fpsRain == null)
-			FlxG.save.data.fpsRain = false;
-
+		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;
 
@@ -159,7 +151,7 @@ class KadeEngineData
 
 		if (FlxG.save.data.resetButton == null)
 			FlxG.save.data.resetButton = false;
-
+		
 		if (FlxG.save.data.botplay == null)
 			FlxG.save.data.botplay = false;
 
@@ -168,7 +160,7 @@ class KadeEngineData
 
 		if (FlxG.save.data.strumline == null)
 			FlxG.save.data.strumline = false;
-
+		
 		if (FlxG.save.data.customStrumLine == null)
 			FlxG.save.data.customStrumLine = 0;
 
@@ -181,17 +173,8 @@ class KadeEngineData
 		if (FlxG.save.data.inputShow == null)
 			FlxG.save.data.inputShow = false;
 
-		/*if (FlxG.save.data.optimize == null)
-			FlxG.save.data.optimize = false;*/
-
-		if (FlxG.save.data.char == null)
-			FlxG.save.data.char = true;
-
-		if (FlxG.save.data.bg == null)
-			FlxG.save.data.bg = true;
-
-		if (FlxG.save.data.freeplayMusic == null)
-			FlxG.save.data.freeplayMusic = false;
+		if (FlxG.save.data.optimize == null)
+			FlxG.save.data.optimize = false;
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
