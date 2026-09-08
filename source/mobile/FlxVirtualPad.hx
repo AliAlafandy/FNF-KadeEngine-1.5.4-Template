@@ -36,6 +36,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 	public var buttonUp:FlxButton;
 	public var buttonRight:FlxButton;
 	public var buttonDown:FlxButton;
+	public var buttonPause:FlxButton;
 
 	/**
 	 * Group of directions buttons.
@@ -110,6 +111,8 @@ class FlxVirtualPad extends FlxSpriteGroup
 				actions.add(add(buttonX = createButton(FlxG.width - 44, FlxG.height - 88, 44, 45, "x")));
 				actions.add(add(buttonB = createButton(FlxG.width - 86, FlxG.height - 48, 44, 45, "b")));
 				actions.add(add(buttonA = createButton(FlxG.width - 44, FlxG.height - 48, 44, 45, "a")));
+			case PAUSE:
+				actions.add(add(buttonPause = createButton(FlxG.width - 44 * 3, FlxG.height - 48 - 519 * 3, 44 * 3, 45 * 3, "pause")));
 			case NONE: // do nothing
 		}
 	}
@@ -132,6 +135,7 @@ class FlxVirtualPad extends FlxSpriteGroup
 		buttonUp = null;
 		buttonDown = null;
 		buttonRight = null;
+		buttonPause = null;
 	}
 
 	/**
@@ -203,5 +207,6 @@ enum FlxActionMode
 	A_B;
 	A_B_C;
 	A_B_X_Y;
+	PAUSE;
 }
 #end
