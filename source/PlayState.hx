@@ -1084,7 +1084,12 @@ class PlayState extends MusicBeatState
 
 			add(mcontrols);
 
+			#if android
+			addAndroidBack();
 			// addVirtualPad(NONE, STOP);
+			#else
+			// addVirtualPad(NONE, STOP);
+			#end
 		#end
 
 		// if (SONG.song == 'South')
@@ -1828,19 +1833,54 @@ class PlayState extends MusicBeatState
 
 	override function openSubState(SubState:FlxSubState)
 	{
-		if (paused)
+		if (PauseSubState.goToOptions)
 		{
-			if (FlxG.sound.music != null)
+			Debug.logTrace("pause thingyt");
+			if (PauseSubState.goBack)
 			{
-				FlxG.sound.music.pause();
-				vocals.pause();
+				Debug.logTrace("pause thingyt");
+				PauseSubState.goToOptions = false;
+				PauseSubState.goBack = false;
+				openSubState(new PauseSubState());
+			}
+			else
+				openSubState(new OptionsMenu(true));
+		}
+		else if (paused)
+		{
+			if (FlxG.sound.music != null && !startingSong)
+			{
+				resyncVocals();
 			}
 
-			#if windows
-			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy), "Acc: " + HelperFunctions.truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
-			#end
 			if (!startTimer.finished)
-				startTimer.active = false;
+				startTimer.active = true;
+			paused = false;
+
+			#if FEATURE_DISCORD
+			if (startTimer.finished)
+			{
+				DiscordClient.changePresence(detailsText
+					+ " "
+					+ SONG.song
+					+ " ("
+					+ storyDifficultyText
+					+ ") "
+					+ Ratings.GenerateLetterRank(accuracy),
+					"\nAcc: "
+					+ HelperFunctions.truncateFloat(accuracy, 2)
+					+ "% | Score: "
+					+ songScore
+					+ " | Misses: "
+					+ misses, iconRPC, true,
+					songLength
+					- Conductor.songPosition);
+			}
+			else
+			{
+				DiscordClient.changePresence(detailsText, SONG.songName + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy), iconRPC);
+			}
+			#end
 		}
 
 		super.openSubState(SubState);
@@ -2028,7 +2068,7 @@ class PlayState extends MusicBeatState
 
 		var lengthInPx = scoreTxt.textField.length * scoreTxt.frameHeight; // bad way but does more or less a better job
 
-		scoreTxt.x = (originalX - (lengthInPx / 2)) + 335;
+		scoreTxt.screenCenter(X);
 
 		if (controls.PAUSE && startedCountdown && canPause)
 		{
@@ -2043,7 +2083,7 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new GitarooPause());
 			}
 			else
-				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				openSubState(new PauseSubState());
 		}
 
 
