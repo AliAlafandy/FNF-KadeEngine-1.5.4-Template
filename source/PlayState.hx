@@ -386,7 +386,7 @@ class PlayState extends MusicBeatState
 			}
 		} else {stageCheck = SONG.stage;}
 
-		if (FlxG.save.data.bg)
+		if (!PlayStateChangeables.Optimize)
 		{
 
 		switch(stageCheck)
