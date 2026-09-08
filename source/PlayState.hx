@@ -1083,6 +1083,8 @@ class PlayState extends MusicBeatState
 			mcontrols.cameras = [camcontrol];
 
 			add(mcontrols);
+
+			addVirtualPad(NONE, PAUSE);
 		#end
 
 		// if (SONG.song == 'South')
