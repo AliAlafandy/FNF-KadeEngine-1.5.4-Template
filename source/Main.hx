@@ -27,6 +27,10 @@ class Main extends Sprite
 	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 
+	public static var bitmapFPS:Bitmap;
+
+	public static var instance:Main;
+
 	public static var watermarks = true; // Whether to put Kade Engine liteartly anywhere
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
@@ -84,6 +88,7 @@ class Main extends Sprite
 		gameHeight = 720;
 		zoom = 1;
 		#end
+
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		addChild(game);
 		
@@ -94,10 +99,11 @@ class Main extends Sprite
 
 	var game:FlxGame;
 
-	var fpsCounter:FPS;
+	var fpsCounter:KadeEngineFPS; // FPS
 
-	public function toggleFPS(fpsEnabled:Bool):Void {
-		fpsCounter.visible = fpsEnabled;
+	public function toggleFPS(fpsEnabled:Bool):Void
+	{
+		// fpsCounter.visible = fpsEnabled;
 	}
 
 	public function changeFPSColor(color:FlxColor)
