@@ -36,12 +36,12 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		/*if (PlayState.instance.useVideo)
+		if (PlayState.instance.useVideo)
 		{
 			menuItems.remove("Resume");
 			if (GlobalVideo.get().playing)
 				GlobalVideo.get().pause();
-		}*/
+		}
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -99,9 +99,9 @@ class PauseSubState extends MusicBeatSubstate
 
 		changeSelection();
 
-		//#if mobileC
-		//addVirtualPad(UP_DOWN, A);
-		//#end
+		#if mobileC
+		addVirtualPad(UP_DOWN, A);
+		#end
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
@@ -113,8 +113,8 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 
-		/*if (PlayState.instance.useVideo)
-			menuItems.remove('Resume');*/
+		if (PlayState.instance.useVideo)
+			menuItems.remove('Resume');
 
 		// pre lowercasing the song name (update)
 		#if windows
@@ -246,22 +246,22 @@ class PauseSubState extends MusicBeatSubstate
 				case "Resume":
 					close();
 				case "Restart song":
-					/*if (PlayState.instance.useVideo)
+					if (PlayState.instance.useVideo)
 					{
 						GlobalVideo.get().stop();
 						PlayState.instance.remove(PlayState.instance.videoSprite);
 						PlayState.instance.removedVideo = true;
-					}*/
+					}
 					FlxG.resetState();
 				case "Debug menu":
-					/*if (useVideo)
+					if (useVideo)
 					{
 					GlobalVideo.get().stop();
 					remove(videoSprite);
 					FlxG.stage.window.onFocusOut.remove(focusOut);
 					FlxG.stage.window.onFocusIn.remove(focusIn);
 					removedVideo = true;
-					}*/
+					}
 					FlxG.switchState(new ChartingState());
 					//FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN,handleInput);
 					#if windows
@@ -273,12 +273,12 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					#end
 				case "Exit to menu":
-					/*if (PlayState.instance.useVideo)
+					if (PlayState.instance.useVideo)
 					{
 						GlobalVideo.get().stop();
 						PlayState.instance.remove(PlayState.instance.videoSprite);
 						PlayState.instance.removedVideo = true;
-					}*/
+					}
 					if(PlayState.loadRep)
 					{
 						FlxG.save.data.botplay = false;
