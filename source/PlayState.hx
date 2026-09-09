@@ -1085,7 +1085,7 @@ class PlayState extends MusicBeatState
 			add(mcontrols);
 
 			#if android
-			addAndroidBack();
+			// addAndroidBack();
 			// addVirtualPad(NONE, STOP);
 			#else
 			// addVirtualPad(NONE, STOP);
@@ -2035,7 +2035,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.screenCenter(X);
 
-		if (controls.PAUSE && startedCountdown && canPause)
+		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
 			persistentDraw = true;
