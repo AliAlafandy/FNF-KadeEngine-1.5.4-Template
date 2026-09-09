@@ -1069,10 +1069,9 @@ class PlayState extends MusicBeatState
 			switch (mcontrols.mode)
 			{
 				case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-					controls.setVirtualPad(mcontrols._virtualPad, FULL, STOP);
+					controls.setVirtualPad(mcontrols._virtualPad, FULL, NONE);
 				case HITBOX:
 					controls.setHitBox(mcontrols._hitbox);
-					controls.setVirtualPad(mcontrols._virtualPad, NONE, STOP);
 				default:
 			}
 			trackedinputs = controls.trackedinputs;
