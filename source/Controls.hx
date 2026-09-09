@@ -316,7 +316,7 @@ class Controls extends FlxActionSet
     	}
 	}
 
-	#if android
+	/*#if android
 	public function addAndroidBack() {
 		// fix this later
 
@@ -325,7 +325,7 @@ class Controls extends FlxActionSet
 		_back.addKey(BACK, JUST_PRESSED);
 		_back.addKey(BACK, PRESSED);
 	}
-	#end
+	#end*/
 
 	public function setVirtualPad(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) {
 		if (DPad == null)
