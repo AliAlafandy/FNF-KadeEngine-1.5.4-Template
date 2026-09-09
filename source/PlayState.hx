@@ -1833,54 +1833,19 @@ class PlayState extends MusicBeatState
 
 	override function openSubState(SubState:FlxSubState)
 	{
-		if (PauseSubState.goToOptions)
+		if (paused)
 		{
-			Debug.logTrace("pause thingyt");
-			if (PauseSubState.goBack)
+			if (FlxG.sound.music != null)
 			{
-				Debug.logTrace("pause thingyt");
-				PauseSubState.goToOptions = false;
-				PauseSubState.goBack = false;
-				openSubState(new PauseSubState());
-			}
-			else
-				openSubState(new OptionsMenu(true));
-		}
-		else if (paused)
-		{
-			if (FlxG.sound.music != null && !startingSong)
-			{
-				resyncVocals();
+				FlxG.sound.music.pause();
+				vocals.pause();
 			}
 
-			if (!startTimer.finished)
-				startTimer.active = true;
-			paused = false;
-
-			#if FEATURE_DISCORD
-			if (startTimer.finished)
-			{
-				DiscordClient.changePresence(detailsText
-					+ " "
-					+ SONG.song
-					+ " ("
-					+ storyDifficultyText
-					+ ") "
-					+ Ratings.GenerateLetterRank(accuracy),
-					"\nAcc: "
-					+ HelperFunctions.truncateFloat(accuracy, 2)
-					+ "% | Score: "
-					+ songScore
-					+ " | Misses: "
-					+ misses, iconRPC, true,
-					songLength
-					- Conductor.songPosition);
-			}
-			else
-			{
-				DiscordClient.changePresence(detailsText, SONG.songName + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy), iconRPC);
-			}
+			#if windows
+			DiscordClient.changePresence("PAUSED on " + SONG.song + " (" + storyDifficultyText + ") " + Ratings.GenerateLetterRank(accuracy), "Acc: " + HelperFunctions.truncateFloat(accuracy, 2) + "% | Score: " + songScore + " | Misses: " + misses  , iconRPC);
 			#end
+			if (!startTimer.finished)
+				startTimer.active = false;
 		}
 
 		super.openSubState(SubState);
@@ -2083,7 +2048,7 @@ class PlayState extends MusicBeatState
 				FlxG.switchState(new GitarooPause());
 			}
 			else
-				openSubState(new PauseSubState());
+				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		}
 
 
