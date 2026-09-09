@@ -253,8 +253,10 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.removedVideo = true;
 					}
 					FlxG.resetState();
+
+				#if mobileC
 				case "Debug menu":
-					if (useVideo)
+					if (PlayState.instance.useVideo)
 					{
 					GlobalVideo.get().stop();
 					remove(videoSprite);
@@ -272,6 +274,8 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.luaModchart = null;
 					}
 					#end
+				#end
+
 				case "Exit to menu":
 					if (PlayState.instance.useVideo)
 					{
