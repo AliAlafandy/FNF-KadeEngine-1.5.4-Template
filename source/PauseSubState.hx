@@ -23,7 +23,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart song', 'Debug menu', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart song', #if mobileC 'Debug menu' #end, 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -253,6 +253,8 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.removedVideo = true;
 					}
 					FlxG.resetState();
+
+				#if mobileC
 				case "Debug menu":
 					if (PlayState.instance.useVideo)
 					{
@@ -272,6 +274,8 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.luaModchart = null;
 					}
 					#end
+				#end
+
 				case "Exit to menu":
 					if (PlayState.instance.useVideo)
 					{
