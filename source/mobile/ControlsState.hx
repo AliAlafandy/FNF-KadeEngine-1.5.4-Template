@@ -13,6 +13,7 @@ import flixel.math.FlxPoint;
 import haxe.Json;
 import mobile.Hitbox;
 import KadeEngineData;
+
 #if lime
 import lime.system.Clipboard;
 #end
@@ -39,8 +40,8 @@ class ControlsState extends MusicBeatSubstate
 
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
-							//'hitbox',
-	var controlitems:Array<String> = ['right control', 'left control', 'keyboard', 'custom', 'hitbox'];
+
+	var controlitems:Array<String> = ['Right Control', 'Left Control', 'KeyBoard', 'Custom', 'HitBox'];
 
 	var curSelected:Int = 0;
 
@@ -69,13 +70,9 @@ class ControlsState extends MusicBeatSubstate
 		// load curSelected
 		curSelected = config.getcontrolmode();
 
-
 		//pad
-		_pad = new FlxVirtualPad(RIGHT_FULL, // A
-			NONE);
+		_pad = new FlxVirtualPad(RIGHT_FULL, NONE); // A
 		_pad.alpha = 0;
-
-
 
 		//text inputvari
 		inputvari = new FlxText(125, 50, 0,controlitems[0], 48);
@@ -95,7 +92,6 @@ class ControlsState extends MusicBeatSubstate
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
 
-
 		//text
 		up_text = new FlxText(200, 200, 0,"Button up x:" + _pad.buttonUp.x +" y:" + _pad.buttonUp.y, 24);
 		down_text = new FlxText(200, 250, 0,"Button down x:" + _pad.buttonDown.x +" y:" + _pad.buttonDown.y, 24);
@@ -104,12 +100,10 @@ class ControlsState extends MusicBeatSubstate
 		//a_text = new FlxText(200, 400, 0,"button A x:" + _pad.buttonA.x +" y:" + _pad.buttonA.y, 24);		
 
 		//hitboxes
-
 		_hb = new Hitbox();
 		_hb.visible = false;
 
 		// buttons
-
 		exitbutton = new FlxUIButton(FlxG.width - 650,25,"exit");
 		exitbutton.resize(125,50);
 		exitbutton.setLabelFormat("VCR OSD Mono",24,FlxColor.BLACK,"center");
@@ -143,7 +137,6 @@ class ControlsState extends MusicBeatSubstate
 
 		//add hb
 		add(_hb);
-
 
 		// add arrows and text
 		add(inputvari);
