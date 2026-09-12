@@ -258,11 +258,11 @@ class PauseSubState extends MusicBeatSubstate
 				case "Debug menu":
 					if (PlayState.instance.useVideo)
 					{
-					GlobalVideo.get().stop();
-					PlayState.instance.remove(PlayState.instance.videoSprite);
-					FlxG.stage.window.onFocusOut.remove(PlayState.instance.focusOut);
-					FlxG.stage.window.onFocusIn.remove(PlayState.instance.focusIn);
-					PlayState.instance.removedVideo = true;
+						GlobalVideo.get().stop();
+						PlayState.instance.remove(PlayState.instance.videoSprite);
+						FlxG.stage.window.onFocusOut.remove(PlayState.instance.focusOut);
+						FlxG.stage.window.onFocusIn.remove(PlayState.instance.focusIn);
+						PlayState.instance.removedVideo = true;
 					}
 					FlxG.switchState(new ChartingState());
 					//FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, handleInput);
