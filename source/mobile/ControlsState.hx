@@ -22,7 +22,6 @@ using StringTools;
 
 class ControlsState extends MusicBeatSubstate
 {
-
 	var _pad:FlxVirtualPad;
 	var _hb:Hitbox;
 
